@@ -19,10 +19,8 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const {
-  PORT_ENV
-} = process.env;
-const PORT =PORT_ENV||3001
+
+const PORT = process.env.PORT || 3001;
 // Syncing all the models at once.
 conn.sync().then(() => {
   server.listen(PORT, () => {
