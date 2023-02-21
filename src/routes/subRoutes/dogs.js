@@ -51,6 +51,8 @@ router.get('/:id', async (req,res)=>{
 
 router.post('/',async(req,res)=>{
     try {
+   
+        
         const { name,image,imagePreview , height, weight, life_span,temper } = req.body; //diets debe ser una array
         const id = await createID(); // crea un id unico.
         const newDog = await Dog.create({
@@ -63,6 +65,10 @@ router.post('/',async(req,res)=>{
             life_span,  
         });
          await associationDogWithTempers(newDog,temper);
+         if(req.query.get === 'DBDogs'){
+            const dogListFromDb = await getDogsFromDb();
+            return res.status(200).send(dogListFromDb);
+        }
          return res.status(200).json(newDog);
     } catch (error) {
         return res.status(400).send(error.message);
